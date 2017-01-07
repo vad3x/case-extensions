@@ -1,20 +1,11 @@
 {
-    "version": "1.0.0-*",
-    "dependencies": {
-        "Microsoft.NETCore.App": {
-            "type": "platform",
-            "version": "1.0.0-rc2-*"
-        }
-    },
+  "version": "1.0.2-*",
+  "authors": [ "Vadim Orekhov" ],
+  "dependencies": {
+    "NETStandard.Library": "1.6.1"
+  },
 
-    "frameworks": {
-        "netcoreapp1.0": {
-            "imports": [
-                "netstandardapp1.5",
-                "dnx46",
-                "dnxcore50",
-                "portable-net45+win8"
-            ]
-        }
-    }
+  "frameworks": {
+    "netstandard1.0": { }
+  }
 }
