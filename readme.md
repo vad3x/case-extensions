@@ -1,6 +1,6 @@
 # .NET CaseExtensions
 
-The library that allows to change any string case to `PascalCase`/`camelCase`/`kebab-case`/`snake_case`.
+The library that allows to change any string case to `PascalCase`/`camelCase`/`kebab-case`/`snake_case`/`Train-Case`.
 
 # Usage
 
