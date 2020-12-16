@@ -15,7 +15,7 @@ jobs:
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.x.x'
+          dotnet-version: '5.0.100'
 
       - run: dotnet tool install -g dotnet-format
       - run:  dotnet format --check
