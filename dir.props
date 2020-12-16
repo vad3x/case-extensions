@@ -1,0 +1,31 @@
+<Project ToolsVersion="14.0" DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\version.props" />
+  <PropertyGroup>
+    <Authors>Vadim Orekhov</Authors>
+    <Product>CaseExtensions</Product>
+    <Description></Description>
+    <Copyright>Vadim Orekhov</Copyright>
+    <PackageDescription>This package adds an Octocat!</PackageDescription>
+    <RepositoryUrl>https://github.com/vad3x/case-extensions</RepositoryUrl>
+
+    <VersionSuffix Condition="'$(BuildNumber)' != ''">-beta$(BuildNumber)</VersionSuffix>
+
+    <AssemblyVersion>$(ReleaseVersion)</AssemblyVersion>
+    <Version>$(AssemblyVersion)$(VersionSuffix)</Version>
+
+    <TestFiles>**/*.Spec.cs; **/*.Test.cs</TestFiles>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CoverletOutput>../../coverage/</CoverletOutput>
+    <CollectCoverage>true</CollectCoverage>
+    <IncludeTestAssembly>true</IncludeTestAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>    <!-- default to allowing all language features -->
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,5 @@
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReleaseVersion>1.1.0</ReleaseVersion>
+  </PropertyGroup>
+</Project>

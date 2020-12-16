@@ -1,4 +1,10 @@
-bin/
-obj/
+.vscode/
+.config/
+
 *.lock.json
 .DS_Store
+bin/
+obj/
+out/
+coverage/
+tools/

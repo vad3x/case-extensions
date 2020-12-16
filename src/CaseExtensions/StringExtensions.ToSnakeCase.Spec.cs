@@ -1,19 +1,17 @@
-﻿using System;
-﻿using CaseExtensions;
-﻿using Xunit;
+using System;
+using FluentAssertions;
+using Xunit;
 
-namespace CaseExtensions.Tests
+namespace CaseExtensions.Spec
 {
-    public class StringExtensions_ToCamelCaseShould
+    public class StringExtensionsToSnakeCase
     {
         [Theory]
         [InlineData(null)]
         public void ReturnArgumentNullException(string source)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var result = source.ToCamelCase();
-            });
+            Action act = () => source.ToSnakeCase();
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -23,10 +21,10 @@ namespace CaseExtensions.Tests
         [InlineData("api/users/32/Some-Action-To-Do?Param=%a%")]
         [InlineData("api/users/32/some_action_to_do?param=%a%")]
         [InlineData("api/users/32/Some_Action_to_do?param=%a%")]
-        public void ReturnCamelCaseUrl(string source)
+        public void ReturnSnakeCaseUrl(string source)
         {
-            var result = source.ToCamelCase();
-            Assert.Equal("api/users/32/someActionToDo?param=%a%", result);
+            var expectedResult = "api/users/32/some_action_to_do?param=%a%";
+            source.ToSnakeCase().Should().Be(expectedResult);
         }
     }
 }

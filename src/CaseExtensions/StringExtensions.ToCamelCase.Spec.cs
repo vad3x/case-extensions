@@ -1,19 +1,17 @@
-﻿using System;
-﻿using CaseExtensions;
-﻿using Xunit;
+using System;
+using FluentAssertions;
+using Xunit;
 
-namespace CaseExtensions.Tests
+namespace CaseExtensions.Spec
 {
-    public class StringExtensions_ToKebabCaseShould
+    public class StringExtensionsToCamelCase
     {
         [Theory]
         [InlineData(null)]
         public void ReturnArgumentNullException(string source)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var result = source.ToKebabCase();
-            });
+            Action act = () => source.ToCamelCase();
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -23,10 +21,10 @@ namespace CaseExtensions.Tests
         [InlineData("api/users/32/Some-Action-To-Do?Param=%a%")]
         [InlineData("api/users/32/some_action_to_do?param=%a%")]
         [InlineData("api/users/32/Some_Action_to_do?param=%a%")]
-        public void ReturnKebabCaseUrl(string source)
+        public void ReturnCamelCaseUrl(string source)
         {
-            var result = source.ToKebabCase();
-            Assert.Equal("api/users/32/some-action-to-do?param=%a%", result);
+            var expectedResult = "api/users/32/someActionToDo?param=%a%";
+            source.ToCamelCase().Should().Be(expectedResult);
         }
     }
 }
