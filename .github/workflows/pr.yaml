@@ -21,27 +21,18 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - run: dotnet tool install -g dotnet-format
-      - run:  dotnet format --check
-      - run: dotnet test -f net5.0
+      - run: dotnet format --check
+      - run: dotnet test -f net5.0 /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-
-      # - name: Restore dotnet tools
-      #   uses: xt0rted/dotnet-tool-restore@v1
-
-      # - name: Run dotnet format
-      #   uses: xt0rted/dotnet-format@v1
-      #   with:
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     only-changed-files: "true"
-
-      - name: Run Tests
-        uses: cake-build/cake-action@v1
+      - uses: codecov/codecov-action@v1
         with:
-          target: Test
+          file: ./coverage/CaseExtensions.net5.0.opencover.xml
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 
       - name: Build solution and generate NuGet package
         run: |
-          dotnet pack -c Release -o out /p:BuildNumber=$GITHUB_RUN_ID
+          dotnet pack -c Release -o out /p:BuildNumber=$GITHUB_RUN_NUMBER
 
       - name: Push generated package to GitHub registry
         run: dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true --api-key ${{secrets.GITHUB_TOKEN}}
