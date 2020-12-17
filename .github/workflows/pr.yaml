@@ -16,14 +16,13 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.100'
+          source-url: https://nuget.pkg.github.com/vad3x/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - run: dotnet tool install -g dotnet-format
       - run:  dotnet format --check
       - run: dotnet test -f net5.0
-        # with:
-        #   source-url: https://nuget.pkg.github.com/vad3x/index.json
-        # env:
-        #   NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 
       # - name: Restore dotnet tools
@@ -42,7 +41,7 @@ jobs:
 
       - name: Build solution and generate NuGet package
         run: |
-          dotnet pack -c Release -o out /p:BuildNumber=GITHUB_RUN_ID
+          dotnet pack -c Release -o out /p:BuildNumber=$GITHUB_RUN_ID
 
-      # - name: Push generated package to GitHub registry
-      #   run: dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true
+      - name: Push generated package to GitHub registry
+        run: dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true
