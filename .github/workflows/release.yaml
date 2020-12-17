@@ -31,7 +31,7 @@ jobs:
 
       - name: Build solution and generate NuGet package
         run: |
-          dotnet pack -c Release --include-symbols -o out /p:BuildNumber=$GITHUB_RUN_NUMBER
+          dotnet pack -c Release --include-symbols -o out
 
       - name: Push generated package to GitHub registry
         run: dotnet nuget push ./out/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}}
