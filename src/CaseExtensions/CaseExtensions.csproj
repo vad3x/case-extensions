@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net5.0</TargetFrameworks>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <LangVersion>latest</LangVersion>
     <OutputType>Library</OutputType>
   </PropertyGroup>
@@ -20,7 +19,6 @@
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <PackageReference Include="coverlet.msbuild" Version="2.9.0" PrivateAssets="All" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" PrivateAssets="All" />
-    <PackageReference Include="Xbehave" Version="2.4.1" PrivateAssets="All" />
     <PackageReference Include="xunit" Version="2.4.1" PrivateAssets="All" />
   </ItemGroup>
 

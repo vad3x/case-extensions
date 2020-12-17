@@ -1,5 +1,7 @@
 # .NET CaseExtensions
 
+[![codecov](https://codecov.io/gh/vad3x/case-extensions/branch/master/graph/badge.svg?token=XaDyFQOpKn)](https://codecov.io/gh/vad3x/case-extensions)
+
 The library that allows to change any string case to `PascalCase`/`camelCase`/`kebab-case`/`snake_case`/`Train-Case`.
 
 # Usage
