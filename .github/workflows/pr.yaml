@@ -27,8 +27,7 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: ./coverage/CaseExtensions.net5.0.opencover.xml
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
+          fail_ci_if_error: true
 
       - name: Build solution and generate NuGet package
         run: |
