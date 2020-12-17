@@ -1,19 +1,17 @@
-﻿using System;
-﻿using CaseExtensions;
-﻿using Xunit;
+using System;
+using FluentAssertions;
+using Xunit;
 
-namespace CaseExtensions.Tests
+namespace CaseExtensions.Spec
 {
-    public class StringExtensions_ToPascalCaseShould
+    public class StringExtensionsToKebabCase
     {
         [Theory]
         [InlineData(null)]
         public void ReturnArgumentNullException(string source)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var result = source.ToPascalCase();
-            });
+            Action act = () => source.ToKebabCase();
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -23,10 +21,10 @@ namespace CaseExtensions.Tests
         [InlineData("api/users/32/Some-Action-To-Do?Param=%a%")]
         [InlineData("api/users/32/some_action_to_do?param=%a%")]
         [InlineData("api/users/32/Some_Action_to_do?param=%a%")]
-        public void ReturnPascalCaseUrl(string source)
+        public void ReturnKebabCaseUrl(string source)
         {
-            var result = source.ToPascalCase();
-            Assert.Equal("Api/Users/32/SomeActionToDo?Param=%A%", result);
+            var expectedResult = "api/users/32/some-action-to-do?param=%a%";
+            source.ToKebabCase().Should().Be(expectedResult);
         }
     }
 }
