@@ -14,15 +14,15 @@ namespace CaseExtensions
             return SymbolsPipe(
                 source,
                 '-',
-                (s, disableFrontDelimeter) =>
+                (s, disableFrontDelimiter) =>
                 {
-                    if (disableFrontDelimeter)
+                    if (disableFrontDelimiter)
                     {
-                        return new char[] { char.ToLowerInvariant(s) };
+                        return new char[] {char.ToLowerInvariant(s)};
                     }
 
-                    return new char[] { '-', char.ToLowerInvariant(s) };
-                });
+                    return new char[] {'-', char.ToLowerInvariant(s)};
+                }, s => { return new char[] {char.ToLowerInvariant(s)}; });
         }
     }
 }

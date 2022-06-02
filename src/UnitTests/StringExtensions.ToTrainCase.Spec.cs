@@ -4,13 +4,13 @@ using Xunit;
 
 namespace CaseExtensions.Spec
 {
-    public class StringExtensionsToKebabCase
+    public class StringExtensionsToTrainCase
     {
         [Theory]
         [InlineData(null)]
         public void ReturnArgumentNullException(string source)
         {
-            Action act = () => source.ToKebabCase();
+            Action act = () => source.ToTrainCase();
             act.Should().Throw<ArgumentNullException>();
         }
 
@@ -21,10 +21,11 @@ namespace CaseExtensions.Spec
         [InlineData("api/users/32/Some-Action-To-Do?Param=%a%")]
         [InlineData("api/users/32/some_action_to_do?param=%a%")]
         [InlineData("api/users/32/Some_Action_to_do?param=%a%")]
-        public void ReturnKebabCaseUrl(string source)
+        [InlineData("API/USERS/32/SOME_ACTION_TO_DO?PARAM=%A%")]
+        public void ReturnTrainCaseUrl(string source)
         {
-            var expectedResult = "api/users/32/some-action-to-do?param=%a%";
-            source.ToKebabCase().Should().Be(expectedResult);
+            const string expectedResult = "Api/Users/32/Some-Action-To-Do?Param=%A%";
+            source.ToTrainCase().Should().Be(expectedResult);
         }
     }
 }
