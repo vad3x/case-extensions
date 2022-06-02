@@ -1,7 +1,8 @@
 .vscode/
 .config/
-
+.idea/
 *.lock.json
+*.DotSettings.user
 .DS_Store
 bin/
 obj/

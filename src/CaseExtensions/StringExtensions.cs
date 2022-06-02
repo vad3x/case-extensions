@@ -6,47 +6,54 @@ namespace CaseExtensions
 {
     public static partial class StringExtensions
     {
-        private static readonly char[] Delimeters = { ' ', '-', '_' };
+        private static readonly char[] Delimiters = { ' ', '-', '_' };
 
         private static string SymbolsPipe(
             string source,
-            char mainDelimeter,
-            Func<char, bool, char[]> newWordSymbolHandler)
+            char mainDelimiter,
+            Func<char, bool, char[]> newWordSymbolHandler,
+            Func<char, char[]> middleWordSymbolHandler)
         {
             var builder = new StringBuilder();
 
-            bool nextSymbolStartsNewWord = true;
-            bool disableFrontDelimeter = true;
+            bool nextAlphaNumericSymbolStartsNewWord = true;
+            bool disableFrontDelimiter = true;
+            var stringHasLowerCase = source.Any(char.IsLower);
             for (var i = 0; i < source.Length; i++)
             {
                 var symbol = source[i];
-                if (Delimeters.Contains(symbol))
+                if (Delimiters.Contains(symbol))
                 {
-                    if (symbol == mainDelimeter)
+                    if (symbol == mainDelimiter)
                     {
                         builder.Append(symbol);
-                        disableFrontDelimeter = true;
+                        disableFrontDelimiter = true;
                     }
 
-                    nextSymbolStartsNewWord = true;
+                    nextAlphaNumericSymbolStartsNewWord = true;
                 }
                 else if (!char.IsLetterOrDigit(symbol))
                 {
                     builder.Append(symbol);
-                    disableFrontDelimeter = true;
-                    nextSymbolStartsNewWord = true;
+                    disableFrontDelimiter = true;
+                    nextAlphaNumericSymbolStartsNewWord = true;
                 }
                 else
                 {
-                    if (nextSymbolStartsNewWord || char.IsUpper(symbol))
+                    var symbolIsUppercase = char.IsUpper(symbol);
+                    if (!nextAlphaNumericSymbolStartsNewWord && symbolIsUppercase && stringHasLowerCase)
+                        nextAlphaNumericSymbolStartsNewWord = true;
+                    if (nextAlphaNumericSymbolStartsNewWord)
                     {
-                        builder.Append(newWordSymbolHandler(symbol, disableFrontDelimeter));
-                        disableFrontDelimeter = false;
-                        nextSymbolStartsNewWord = false;
+                        var charsToAppend = newWordSymbolHandler(symbol, disableFrontDelimiter);
+                        builder.Append(charsToAppend);
+                        disableFrontDelimiter = false;
+                        nextAlphaNumericSymbolStartsNewWord = false;
                     }
                     else
                     {
-                        builder.Append(symbol);
+                        var charsToAppend = middleWordSymbolHandler(symbol);
+                        builder.Append(charsToAppend);
                     }
                 }
             }

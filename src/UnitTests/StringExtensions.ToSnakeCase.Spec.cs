@@ -4,13 +4,13 @@ using Xunit;
 
 namespace CaseExtensions.Spec
 {
-    public class StringExtensionsToTrainCase
+    public class StringExtensionsToSnakeCase
     {
         [Theory]
         [InlineData(null)]
         public void ReturnArgumentNullException(string source)
         {
-            Action act = () => source.ToTrainCase();
+            Action act = () => source.ToSnakeCase();
             act.Should().Throw<ArgumentNullException>();
         }
 
@@ -21,10 +21,11 @@ namespace CaseExtensions.Spec
         [InlineData("api/users/32/Some-Action-To-Do?Param=%a%")]
         [InlineData("api/users/32/some_action_to_do?param=%a%")]
         [InlineData("api/users/32/Some_Action_to_do?param=%a%")]
-        public void ReturnTrainCaseUrl(string source)
+        [InlineData("API/USERS/32/SOME_ACTION_TO_DO?PARAM=%A%")]
+        public void ReturnSnakeCaseUrl(string source)
         {
-            var expectedResult = "Api/Users/32/Some-Action-To-Do?Param=%A%";
-            source.ToTrainCase().Should().Be(expectedResult);
+            const string expectedResult = "api/users/32/some_action_to_do?param=%a%";
+            source.ToSnakeCase().Should().Be(expectedResult);
         }
     }
 }

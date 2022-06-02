@@ -4,7 +4,7 @@ namespace CaseExtensions
 {
     public static partial class StringExtensions
     {
-        public static string ToCamelCase(this string source)
+        public static string ToScreamingSnakeCase(this string source)
         {
             if (source == null)
             {
@@ -13,16 +13,16 @@ namespace CaseExtensions
 
             return SymbolsPipe(
                 source,
-                '\0',
+                '_',
                 (s, disableFrontDelimiter) =>
                 {
                     if (disableFrontDelimiter)
                     {
-                        return new char[] { char.ToLowerInvariant(s) };
+                        return new char[] { char.ToUpperInvariant(s) };
                     }
 
-                    return new char[] { char.ToUpperInvariant(s) };
-                }, s => { return new char[] {char.ToLowerInvariant(s)}; });
+                    return new char[] { '_', char.ToUpperInvariant(s) };
+                }, s => { return new char[] {char.ToUpperInvariant(s)}; });
         }
     }
 }

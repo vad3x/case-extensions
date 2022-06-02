@@ -14,7 +14,8 @@ namespace CaseExtensions
             return SymbolsPipe(
                 source,
                 '\0',
-                (s, i) => new char[] { char.ToUpperInvariant(s) });
+                (s, i) => new [] { char.ToUpperInvariant(s) },
+                s => { return new [] {char.ToLowerInvariant(s)}; });
         }
     }
 }
