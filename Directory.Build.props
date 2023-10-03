@@ -13,14 +13,6 @@
 
         <AssemblyVersion>$(ReleaseVersion)</AssemblyVersion>
         <Version>$(AssemblyVersion)$(VersionSuffix)</Version>
-
-        <TestFiles>**/*.Spec.cs; **/*.Test.cs</TestFiles>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-        <CoverletOutput>../../coverage/</CoverletOutput>
-        <CollectCoverage>true</CollectCoverage>
-        <IncludeTestAssembly>true</IncludeTestAssembly>
     </PropertyGroup>
 
     <PropertyGroup>
