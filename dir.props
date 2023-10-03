@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Authors>Vadim Orekhov</Authors>
     <Product>CaseExtensions</Product>
-    <Description></Description>
+    <Description>Change any string case to PascalCase/camelCase/kebab-case/snake_case/Train-Case</Description>
     <Copyright>Vadim Orekhov</Copyright>
     <PackageDescription>Change any string case to PascalCase/camelCase/kebab-case/snake_case/Train-Case</PackageDescription>
     <RepositoryUrl>https://github.com/vad3x/case-extensions</RepositoryUrl>
