@@ -15,18 +15,18 @@ jobs:
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.100'
+          dotnet-version: 8.0.x
           source-url: https://nuget.pkg.github.com/vad3x/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - run: dotnet tool install -g dotnet-format
       - run: dotnet format --check
-      - run: dotnet test -f net5.0 /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      - run: dotnet test -f net8.0 /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - uses: codecov/codecov-action@v1
         with:
-          file: ./coverage/CaseExtensions.net5.0.opencover.xml
+          directory: ./coverage
           fail_ci_if_error: true
 
       - name: Build solution and generate NuGet package
