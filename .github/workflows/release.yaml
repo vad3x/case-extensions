@@ -10,28 +10,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
-
-      - name: Setup .NET Core @ Latest
-        uses: actions/setup-dotnet@v1
+        uses: actions/checkout@v4
         with:
-          dotnet-version: 8.0.x
+          clean: true
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            8.0.x
+            7.0.x
+            6.0.x
           source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
 
       - run: dotnet tool install -g dotnet-format
-      - run: dotnet format --check
+      - run: dotnet format --verify-no-changes
       - run: dotnet test -f net8.0 /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-      - uses: codecov/codecov-action@v1
+      - name: Add Mono repository
+        run: sudo apt install ca-certificates gnupg && sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/mono-official-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && echo "deb [signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list && sudo apt update
+
+      - name: Install Mono
+        run: sudo apt install -y mono-devel
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run build
+        run: dotnet build --no-restore
+
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      - name: Validate code formatting
+        run: dotnet format --verify-no-changes
+
+      - name: Run tests
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+
+      - name: Code Coverage Report
+        uses: codecov/codecov-action@v3
         with:
           directory: ./coverage
           fail_ci_if_error: true
+          move_coverage_to_trash: true
 
       - name: Build solution and generate NuGet package
         run: |
-          dotnet pack -c Release --include-symbols -o out
+          dotnet pack -c Release --include-symbols -o out /p:BuildNumber=$GITHUB_RUN_NUMBER
 
       - name: Push generated package to GitHub registry
         run: dotnet nuget push ./out/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}}
