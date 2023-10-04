@@ -15,6 +15,19 @@ public class StringExtensionsUnitTests
     }
 
     [Theory]
+    [InlineData("The Quick Brown Fox")]
+    [InlineData("the_quick_brown_fox")]
+    [InlineData("the-quick-brown-fox")]
+    [InlineData("The-Quick-Brown-Fox")]
+    [InlineData("theQuickBrownFox")]
+    [InlineData("TheQuickBrownFox")]
+    public void ToCamelCase_WithPhraseString_ShouldReturnCamelCaseString(string source)
+    {
+        const string expectedResult = "theQuickBrownFox";
+        source.ToCamelCase().Should().Be(expectedResult);
+    }
+
+    [Theory]
     [InlineData("api/users/32/someActionToDo?param=%a%")]
     [InlineData("Api/Users/32/SomeActionToDo?Param=%A%")]
     [InlineData("api/users/32/some-action-to-do?param=%a%")]
@@ -37,6 +50,19 @@ public class StringExtensionsUnitTests
     {
         Action act = () => source.ToKebabCase();
         act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Theory]
+    [InlineData("The Quick Brown Fox")]
+    [InlineData("the_quick_brown_fox")]
+    [InlineData("the-quick-brown-fox")]
+    [InlineData("The-Quick-Brown-Fox")]
+    [InlineData("theQuickBrownFox")]
+    [InlineData("TheQuickBrownFox")]
+    public void ToKebabCase_WithPhraseString_ShouldReturnKebabCaseString(string source)
+    {
+        const string expectedResult = "the-quick-brown-fox";
+        source.ToKebabCase().Should().Be(expectedResult);
     }
 
     [Theory]
@@ -65,6 +91,19 @@ public class StringExtensionsUnitTests
     }
 
     [Theory]
+    [InlineData("The Quick Brown Fox")]
+    [InlineData("the_quick_brown_fox")]
+    [InlineData("the-quick-brown-fox")]
+    [InlineData("The-Quick-Brown-Fox")]
+    [InlineData("theQuickBrownFox")]
+    [InlineData("TheQuickBrownFox")]
+    public void ToPascalCase_WithPhraseString_ShouldReturnPascalCaseString(string source)
+    {
+        const string expectedResult = "TheQuickBrownFox";
+        source.ToPascalCase().Should().Be(expectedResult);
+    }
+
+    [Theory]
     [InlineData("api/users/32/someActionToDo?param=%a%")]
     [InlineData("Api/Users/32/SomeActionToDo?Param=%A%")]
     [InlineData("api/users/32/some-action-to-do?param=%a%")]
@@ -90,6 +129,19 @@ public class StringExtensionsUnitTests
     }
 
     [Theory]
+    [InlineData("The Quick Brown Fox")]
+    [InlineData("the_quick_brown_fox")]
+    [InlineData("the-quick-brown-fox")]
+    [InlineData("The-Quick-Brown-Fox")]
+    [InlineData("theQuickBrownFox")]
+    [InlineData("TheQuickBrownFox")]
+    public void ToSnakeCase_WithPhraseString_ShouldReturnSnakeCaseString(string source)
+    {
+        const string expectedResult = "the_quick_brown_fox";
+        source.ToSnakeCase().Should().Be(expectedResult);
+    }
+
+    [Theory]
     [InlineData("api/users/32/someActionToDo?param=%a%")]
     [InlineData("Api/Users/32/SomeActionToDo?Param=%A%")]
     [InlineData("api/users/32/some-action-to-do?param=%a%")]
@@ -112,6 +164,19 @@ public class StringExtensionsUnitTests
     {
         Action act = () => source.ToTrainCase();
         act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Theory]
+    [InlineData("The Quick Brown Fox")]
+    [InlineData("the_quick_brown_fox")]
+    [InlineData("the-quick-brown-fox")]
+    [InlineData("The-Quick-Brown-Fox")]
+    [InlineData("theQuickBrownFox")]
+    [InlineData("TheQuickBrownFox")]
+    public void ToTrainCase_WithPhraseString_ShouldReturnTrainCaseString(string source)
+    {
+        const string expectedResult = "The-Quick-Brown-Fox";
+        source.ToTrainCase().Should().Be(expectedResult);
     }
 
     [Theory]
