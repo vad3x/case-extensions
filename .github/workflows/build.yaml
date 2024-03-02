@@ -1,9 +1,10 @@
-name: Release
+name: Build
 
 on:
   push:
     branches:
-      - master
+      - "*"
+      - "!master"
 
 jobs:
   build:
@@ -21,9 +22,6 @@ jobs:
             8.0.x
             7.0.x
             6.0.x
-          source-url: https://api.nuget.org/v3/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
 
       - run: dotnet tool install -g dotnet-format
       - run: dotnet format --verify-no-changes
@@ -51,15 +49,14 @@ jobs:
         run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
       - name: Code Coverage Report
-        uses: codecov/codecov-action@v3
+        uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          directory: ./coverage
-          fail_ci_if_error: true
-          move_coverage_to_trash: true
-
-      - name: Build solution and generate NuGet package
-        run: |
-          dotnet pack -c Release --include-symbols -o out /p:BuildNumber=$GITHUB_RUN_NUMBER
-
-      - name: Push generated package to GitHub registry
-        run: dotnet nuget push ./out/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}}
+          filename: ./coverage/*cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: "60 80"

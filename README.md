@@ -4,7 +4,7 @@
 
 The library that allows to change any string case to `PascalCase`/`camelCase`/`kebab-case`/`snake_case`/`Train-Case`.
 
-# Usage
+## Usage
 
 ```csharp
 using CaseExtensions;
@@ -15,7 +15,7 @@ using CaseExtensions;
     var result = source.ToKebabCase(); // the-quick-brown-fox
 ```
 
-# More Examples
+## More Examples
 
 Inter-style case translations are supported just like translations from plain English.
 
@@ -65,7 +65,7 @@ Here are a few demo expressions. Each of these expression evaluates to `true`.
 "The-Quick-Brown-Fox".ToTrainCase() == "The-Quick-Brown-Fox"
 ```
 
-# Tests
+## Tests
 
 To run tests:
 
@@ -73,6 +73,6 @@ To run tests:
 dotnet test test/CaseExtensions.Tests/project.json
 ```
 
-# License
+## License
 
 The MIT License (MIT)

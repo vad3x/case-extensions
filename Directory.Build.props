@@ -1,0 +1,23 @@
+<Project ToolsVersion="14.0" DefaultTargets="Build"
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project=".\version.props" />
+    <PropertyGroup>
+        <Authors>Vadim Orekhov</Authors>
+        <Product>CaseExtensions</Product>
+        <Description>Change any string case to PascalCase/camelCase/kebab-case/snake_case/Train-Case</Description>
+        <Copyright>Vadim Orekhov</Copyright>
+        <PackageDescription>Change any string case to PascalCase/camelCase/kebab-case/snake_case/Train-Case</PackageDescription>
+        <RepositoryUrl>https://github.com/vad3x/case-extensions</RepositoryUrl>
+
+        <VersionSuffix Condition="'$(BuildNumber)' != ''">-beta$(BuildNumber)</VersionSuffix>
+
+        <AssemblyVersion>$(ReleaseVersion)</AssemblyVersion>
+        <Version>$(AssemblyVersion)$(VersionSuffix)</Version>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>latest</LangVersion>
+        <WarningLevel>4</WarningLevel>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+</Project>
